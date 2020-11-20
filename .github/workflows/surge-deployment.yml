@@ -6,9 +6,9 @@ name: Covid-19 Trakcer deployment on surge
 # events but only for the master branch
 on:
   push:
-    branches: [ covid-19-tracker ]
+    branches: [ covid-19-tracker-advance ]
   pull_request:
-    branches: [ covid-19-tracker ]
+    branches: [ covid-19-tracker-advance ]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
