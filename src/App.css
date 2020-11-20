@@ -23,6 +23,15 @@ body {
   padding: 20px;
 }
 
+.app__dropdown {
+  background-color: white;
+}
+
+.app__header > h1 {
+  color: #fc3c3c;
+  font-size: 2 rem;
+}
+
 .app__header {
   display: flex;
   align-items: center;
@@ -34,81 +43,34 @@ body {
   flex: 0.9;
 }
 
+.app__right {
+  display: flex;
+  flex-direction: column;
+}
+
+.app__right .MuiCardContent-root {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
 .app__stats {
   display: flex;
   justify-content: space-between;
 }
 
+.app__graph {
+  flex-grow: 1;
+}
+
+.app__graphTitle {
+  margin-top: 20px;
+  margin-bottom:  0px;
+}
+
+
 @media (max-width: 800px) {
   .app{
     flex-direction: column;
   }
-}
-
-.infoBox {
-  flex: 0.3;
-
-}
-
-.infoBox__cases__Deaths {
-  color: #ff0000;
-  font-weight: 600;
-  font-size: 1.75rem;
-  margin-bottom: 0.5rem;
-}
-
-.infoBox__cases__Recovered {
-  color: #05d844;
-  font-weight: 600;
-  font-size: 1.75rem;
-  margin-bottom: 0.5rem;
-}
-
-.infoBox__cases__Coronavirus {
-  color: #f86706;
-  font-weight: 600;
-  font-size: 1.75rem;
-  margin-bottom: 0.5rem;
-}
-
-.infoBox__title__Deaths {
-  color: #ff0000;
-  font-weight: 600;
-  font-size: 1.75rem;
-  margin-bottom: 0.5rem;
-}
-
-.infoBox__title__Recovered {
-  color: #05d844;
-  font-weight: 600;
-  font-size: 1.75rem;
-  margin-bottom: 0.5rem;
-}
-
-.infoBox__title__Coronavirus {
-  color: #f86706;
-  font-weight: 600;
-  font-size: 1.75rem;
-  margin-bottom: 0.5rem;
-}
-
-.infoBox__total__Deaths {
-  color: #ff0000;
-  font-weight: 600;
-  font-size: 1.75rem;
-  margin-bottom: 0.5rem;
-}
-
-.infoBox__total__Recovered {
-  color: #05d844;
-  font-weight: 600;
-  font-size: 1.75rem;
-  margin-bottom: 0.5rem;
-}
-
-.infoBox__total__Coronavirus {
-  color: #f86706;
-  font-weight: 600;
-  font-size: 1.75rem;
-  margin-bottom: 0.5rem;
 }

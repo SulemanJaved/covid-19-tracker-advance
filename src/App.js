@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
 import { MenuItem, FormControl, Select, Card, CardContent } from "@material-ui/core"
+import "leaflet/dist/leaflet.css";
 
 // Import components
 import InfoBox from "./components/InfoBox";
 import Map from "./components/Map";
 import Table from "./components/Table";
-import {sortData} from "./components/util";
+import {sortData, prettyPrintStat} from "./components/util";
 import LineGraph from './components/LineGraph';
 
 function App() {
@@ -14,6 +15,10 @@ function App() {
   const [country, setCountry] = useState('global');
   const [countryInfo, setCountryInfo] = useState({});
   const [tableData, setTableData] = useState([]);
+  const [mapCenter, setMapCenter] = useState({ lat: 34.80746, lng: -15.4796 });
+  const [mapZoom, setMapZoom] = useState(1.5);
+  const [mapCountries, setMapCountries] = useState([]);
+  const [casesType, setCasesType] = useState("cases");
 
   // 
   useEffect(() => { 
@@ -39,6 +44,7 @@ function App() {
           const sortedData =sortData (data);
           setTableData(sortedData);
           setCountries(countries);
+          setMapCountries(data)
           console.log("Countries", countries);
         });
     };
@@ -54,14 +60,20 @@ function App() {
     const url = countryCode === "global"
       ? 'https://disease.sh/v3/covid-19/all'
       : `https://disease.sh/v3/covid-19/countries/${countryCode}`
+
     await fetch(url)
       .then((response) => response.json())
       .then((data) => {
         setCountry(countryCode);
         setCountryInfo(data);
+
+        setMapCenter([data.countryInfo.lat, data.countryInfo.long]);
+        console.log('CountryInfolat', data.countryInfo.lat)
+        console.log('CountryInfolong', data.countryInfo.long)
+        setMapZoom(4);
       }, []);
   };
-  console.log('CountryInfo', countryInfo)
+  // console.log('CountryInfo', countryInfo)
 
 
 
@@ -69,7 +81,7 @@ function App() {
     <div className="app">
       <div className='app__left'>
 
-        {/* Heade */}
+        {/* Header */}
         <div className="app__header">
           <h1>COVID-19 TRACKER</h1>
 
@@ -85,26 +97,40 @@ function App() {
           </FormControl>
         </div>
 
-        { /*InfoBoxes*/}
+        {/*InfoBoxes*/}
         <div className="app__stats">
-          <InfoBox title="Coronavirus Cases" cases={countryInfo.todayCases} total={countryInfo.cases} />
-          <InfoBox title="Recovered" cases={countryInfo.todayRecovered} total={countryInfo.recovered} />
-          <InfoBox title="Deaths" cases={countryInfo.todayDeaths} total={countryInfo.deaths} />
+          <InfoBox 
+            isRed
+            active={casesType === "cases"}
+            onClick={(e) => setCasesType("cases")} 
+            title="Coronavirus Cases" cases={prettyPrintStat(countryInfo.todayCases)} total={prettyPrintStat(countryInfo.cases)} 
+          />
+          <InfoBox 
+            active={casesType === "recovered"}
+            onClick={(e) => setCasesType("recovered")} 
+            title="Recovered" cases={prettyPrintStat(countryInfo.todayRecovered)} total={prettyPrintStat(countryInfo.recovered)} 
+          />
+          <InfoBox
+            isRed 
+            active={casesType === "deaths"}
+            onClick={(e) => setCasesType("deaths")} 
+            title="Deaths" cases={prettyPrintStat(countryInfo.todayDeaths)} total={prettyPrintStat(countryInfo.deaths)} 
+          />
         </div>
+        {/* Map */}
         <div>
-          {/* Map */}
-          <Map />
+          <Map casesType={casesType} countries={mapCountries} center={mapCenter} zoom={mapZoom} />
         </div>
+       
       </div>
 
       <Card className="app__right">
         <CardContent>
           <h3>Live Cases Table (Countrywise) </h3>
           <Table countries={tableData}></Table>
-            <br />
            {/* Graph */}
-          <h3>New Cases Chart (Globally)</h3>
-          <LineGraph casesType="cases"/>
+          <h3 className="app__graphTitle">Global History of {casesType}</h3>
+          <LineGraph className="app__graph" casesType={casesType}/>
         </CardContent>
       </Card>
     </div>

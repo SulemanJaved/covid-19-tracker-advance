@@ -1,16 +1,15 @@
 import React from 'react'
+import "./InfoBox.css"
 import { Card, CardContent, Typography } from "@material-ui/core"
-import NumberFormat from 'react-number-format';
 
-function InfoBox({ title, cases, total }) {
+
+function InfoBox({ title, cases, isRed, active, total, ...props }) {
     return (
-        <Card  className="infoBox">
+        <Card onClick={props.onClick} className={`infoBox ${active && 'infoBox--selected'} ${isRed && 'infoBox--red'}`}>
             <CardContent>
-                <Typography className={`infoBox__title__${title}`}> {title}</Typography>
-                <h2 className={`infoBox__cases__${title}`}>
-                    <NumberFormat value={cases} displayType={'text'} thousandSeparator={true} /> Today</h2>
-                <Typography className={`infoBox__total__${title}`}> 
-                    <NumberFormat value={total} displayType={'text'} thousandSeparator={true} /> Total</Typography>
+                <Typography className= "infoBox__title" color="textSecondary">{title}</Typography>
+                <h2 className={`infoBox__cases ${!isRed && "infoBox__cases--green"}`} color="textSecondary">{cases}</h2>
+                <Typography className="infoBox__total" color="textSecondary">{total} Total</Typography>
             </CardContent>           
         </Card>
     )
