@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
-import { MenuItem, FormControl, Select, Card, CardContent } from "@material-ui/core"
+import { MenuItem, FormControl, Select, Card, CardContent } from "@material-ui/core";
 import "leaflet/dist/leaflet.css";
 
 // Import components
 import InfoBox from "./components/InfoBox";
 import Map from "./components/Map";
 import Table from "./components/Table";
-import {sortData, prettyPrintStat} from "./components/util";
+import { sortData, prettyPrintStat } from "./components/util";  
 import LineGraph from './components/LineGraph';
 
-function App() {
+const App = () => {
   const [countries, setCountries] = useState([]);
-  const [country, setCountry] = useState('global');
+  const [country, setCountry] = useState("global");
   const [countryInfo, setCountryInfo] = useState({});
   const [tableData, setTableData] = useState([]);
   const [mapCenter, setMapCenter] = useState({ lat: 34.80746, lng: -15.4796 });
@@ -41,7 +41,7 @@ function App() {
             value: country.countryInfo.iso3,
           }));
 
-          const sortedData =sortData (data);
+          let sortedData =sortData (data);
           setTableData(sortedData);
           setCountries(countries);
           setMapCountries(data)
@@ -51,9 +51,10 @@ function App() {
 
     getCountriesData();
   }, []);
+  console.log(casesType);
 
-  const onCountryChange = async (event) => {
-    const countryCode = event.target.value;
+  const onCountryChange = async (e) => {
+    const countryCode = e.target.value;
 
     // Fetching Global Data from https://disease.sh/v3/covid-19/all
     // Fetching data of a Country from https://disease.sh/v3/covid-19/countries/[COUNTRY_CODE]
@@ -66,7 +67,6 @@ function App() {
       .then((data) => {
         setCountry(countryCode);
         setCountryInfo(data);
-
         setMapCenter([data.countryInfo.lat, data.countryInfo.long]);
         console.log('CountryInfolat', data.countryInfo.lat)
         console.log('CountryInfolong', data.countryInfo.long)
@@ -135,6 +135,6 @@ function App() {
       </Card>
     </div>
   );
-}
+};
 
 export default App;

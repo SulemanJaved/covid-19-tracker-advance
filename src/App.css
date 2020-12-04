@@ -2,24 +2,14 @@
   margin: 0;
 }
 
-h1{
-  color:  #4b4b4b;
-}
-
-h3{
-  color: #4b4b4b;
-}
-
-h5{
-  color: #4b4b4b;
-}
-
 body {
-  background-color: #ececec;
+  background-color: #f5f6fa;
 }
+
 .app {
   display: flex;
   justify-content: space-evenly;
+  background-color: #f5f6fa;
   padding: 20px;
 }
 
@@ -29,7 +19,7 @@ body {
 
 .app__header > h1 {
   color: #fc3c3c;
-  font-size: 2 rem;
+  font-size: 2rem;
 }
 
 .app__header {

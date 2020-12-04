@@ -2,18 +2,24 @@ import React from "react";
 import { Circle, Popup } from "react-leaflet";
 import numeral from "numeral";
 
-// Changing Colors on Cases Type
+// Changing Circles on Cases Type
 const casesTypeColors = {
     cases: {
         hex: "#CC1034",
+        rgb: "rgb(204, 16, 52)",
+        half_op: "rgba(204, 16, 52, 0.5)",
         multiplier: 600,
     },
     recovered: {
-        hex: "#7DD71D",
+        hex: "#7dd71d",
+        rgb: "rgb(125, 215, 29)",
+        half_op: "rgba(125, 215, 29, 0.5)",
         multiplier: 600,
     },
     deaths: {
-        hex: "#FB4443",
+        hex: "#fb4443",
+        rgb: "rgb(251, 68, 67)",
+        half_op: "rgba(251, 68, 67, 0.5)",
         multiplier: 600,
     },
 };
@@ -21,23 +27,23 @@ const casesTypeColors = {
 
 // Sorting of Countries in Data according to Cases
 export const sortData = (data) => {
-    const sortedData = [...data];
+    let sortedData = [...data];
 
     return sortedData.sort((a, b) => a.cases>b.cases ? -1 : 1);
 };
 
-
+// Numeral Properties for InfoBoxes
 export const prettyPrintStat = (stat) =>
 stat? `+${numeral(stat).format("0.0a")}`: "+0";
 
 // Drawing Circles of Cases on Map with interactive tooltop
 export const showDataOnMap = (data, casesType) =>
-    data.map(country => (
+    data.map((country) => (
         <Circle
             center={[country.countryInfo.lat, country.countryInfo.long]}
-            fill Opacity={0.4}
             color={casesTypeColors[casesType].hex}
             fillColor={casesTypeColors[casesType].hex}
+            fillOpacity={0.4}
             radius={Math.sqrt(country[casesType]) * casesTypeColors[casesType].multiplier}
         >
             <Popup>
